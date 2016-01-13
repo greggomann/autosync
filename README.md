@@ -2,7 +2,7 @@
 Automatically keep a local build directory in sync with a remote.
 
 ## Dependencies
-(fswatch)[https://github.com/emcrisostomo/fswatch]
+[fswatch](https://github.com/emcrisostomo/fswatch)
 
 ## Assumptions
 * We assume that the specified platform has a username defined in the `case`
