@@ -5,9 +5,7 @@
 # Dependency: fswatch (https://github.com/emcrisostomo/fswatch)
 #
 # Assumptions:
-#   * We assume that the current directory's name will be found as a first-level
-#     child directory of the REMOTE_DEV_DIR.
-#   * We assume that the platform has had a username defined in the `case`
+#   * We assume that the platform has a username defined in the `case`
 #     statement below.
 #
 # Usage: ./autosync.sh [platform] [host IP]
