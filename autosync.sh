@@ -13,8 +13,9 @@
 
 DEFAULT_PLATFORM=centos
 AUTOSYNC_DIR=$HOME/.autosync
-REMOTE_DEV_DIR="\\\$HOME/src"
-SSH_KEY=$HOME/.ssh/default.pem
+#REMOTE_DEV_DIR="\\\$HOME/src"
+REMOTE_DEV_DIR="/mnt/src"
+SSH_KEY=$HOME/.ssh/greg.pem
 
 # Create the log directory if necessary.
 if [ ! -e "$AUTOSYNC_DIR" ]; then
@@ -31,7 +32,7 @@ fi
 # Set the remote username.
 case $platform in
 centos)
-  remote_username=root
+  remote_username=centos
   ;;
 ubuntu)
   remote_username=ubuntu
@@ -66,10 +67,11 @@ current_dir=${PWD##*/}
 target_dir=$DEV_DIR/$current_dir
 
 # Store the rsync command.
-rsync_command="rsync -avz --rsync-path=\"mkdir -p $REMOTE_DEV_DIR/$current_dir \
-  && rsync\" --delete --exclude=\".git/*\" --exclude=\"build/*\" -e \"ssh -i   \
-  $SSH_KEY -l $remote_username\" .                                             \
-  $remote_username@$host_ip:$REMOTE_DEV_DIR/$current_dir"
+rsync_command="rsync -avz --rsync-path=\"sudo mkdir -p                         \
+  $REMOTE_DEV_DIR/$current_dir && sudo chown -R                                \
+  $remote_username:$remote_username $REMOTE_DEV_DIR && rsync\" --delete        \
+  --exclude=\".git/*\" --exclude=\"build/*\" -e \"ssh -i $SSH_KEY -l           \
+  $remote_username\" . $remote_username@$host_ip:$REMOTE_DEV_DIR/$current_dir"
 
 # Perform an initial sync.
 eval $rsync_command
