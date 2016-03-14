@@ -4,22 +4,21 @@ Automatically keep a local build directory in sync with a remote.
 ## Dependencies
 [fswatch](https://github.com/emcrisostomo/fswatch)
 
-## Assumptions
-* We assume that the specified platform has a username defined in the `case`
-  statement in the script. This username is used to log in to the remote.
-
 ## Usage
 ```bash
-./autosync.sh [platform] [host IP]
+./autosync.sh [remote_username] [ssh_key_file] [host_ip] [machine_id]
 ```
 
-When you run `autosync.sh` in a given directory, it syncs the remote such that
-it contains a directory of the same name within `REMOTE_DEV_DIR`, as defined in
-the script. The first time you run it for a given platform you must specify the
-host IP. Subsequent executions will use the stored IP unless it is specified
-again.
+When you run `autosync.sh` in a given directory, it syncs the remote machine
+such that it contains a directory of the same name within `REMOTE_DEV_DIR`, as
+defined in the script. `ssh_key_file` is the path of the SSH key that will be
+used to connect to the remote machine. The first time you run it for a given
+platform you must specify the host IP. Subsequent executions will use the stored
+IP for the specified `machine_id` unless it is specified again. `machine_id`
+defaults to the value `default` if not provided.
 
-The fswatch process is run in the background and logs its output within
+An `fswatch` process is run in the background and logs its output within
 `AUTOSYNC_DIR`, as defined in the script.
 
-See the top of the script for constant definitions that you may want to alter.
+See the top of the script for the definition of constants that you may want to
+alter.
